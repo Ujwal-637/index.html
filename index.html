@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Friend Proposal 😎</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+width:90%;
+max-width:500px;
+position:relative;
+z-index:10;
+}
+
+h1{
+font-size:2.3rem;
+color:#0072ff;
+margin-bottom:10px;
+}
+
+h2{
+margin-bottom:20px;
+color:#333;
+}
+
+p{
+font-size:18px;
+margin-bottom:25px;
+color:#555;
+}
+
+.buttons{
+position:relative;
+height:120px;
+}
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+transition:.3s;
+font-weight:bold;
+}
+
+#yesBtn{
+background:#28a745;
+color:white;
+margin-right:20px;
+}
+
+#yesBtn:hover{
+transform:scale(1.1);
+}
+
+#noBtn{
+background:#dc3545;
+color:white;
+position:absolute;
+}
+
+#result{
+display:none;
+margin-top:25px;
+animation:pop .7s;
+}
+
+@keyframes pop{
+0%{transform:scale(0);}
+100%{transform:scale(1);}
+}
+
+.emoji{
+position:absolute;
+font-size:30px;
+animation:float 6s linear infinite;
+opacity:.8;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh) rotate(0deg);
+opacity:0;
+}
+20%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div class="container">
+
+<h1>😂 D Ujwal ❤️ Manjunatha</h1>
+
+<h2>Question of the Day 🤔</h2>
+
+<p><b>Manjunatha...</b><br><br>
+Will you be my <br><span style="font-size:28px;">😎 BEST FRIEND 😎</span> ?
+</p>
+
+<div class="buttons">
+
+<button id="yesBtn">YES 😎</button>
+
+<button id="noBtn">NO 🙄</button>
+
+</div>
+
+<div id="result">
+
+<h1>🎉 YAYYYYY!! 🎉</h1>
+
+<h2>Congratulations Manjunatha!!</h2>
+
+<p>
+
+🏆 You are officially promoted to...<br><br>
+
+<b>BEST FRIEND FOR LIFE</b><br><br>
+
+Benefits Include 😂<br><br>
+
+☕ Unlimited Tea Breaks<br>
+😂 Unlimited Roasting<br>
+🏍️ Emergency Bike Rides<br>
+🍔 Free Food (Sometimes 😅)<br>
+📱 Daily Meme Delivery<br>
+🚫 No Refund. No Escape.
+
+</p>
+
+<h2>🤝 Welcome to the Brotherhood ❤️</h2>
+
+</div>
+
+</div>
+
+<script>
+
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const result=document.getElementById("result");
+
+noBtn.style.left="270px";
+noBtn.style.top="20px";
+
+function moveButton(){
+
+const x=Math.random()*(window.innerWidth-120);
+
+const y=Math.random()*(window.innerHeight-80);
+
+noBtn.style.position="fixed";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+}
+
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("click",moveButton);
+noBtn.addEventListener("touchstart",moveButton);
+
+yesBtn.onclick=function(){
+
+document.querySelector(".buttons").style.display="none";
+result.style.display="block";
+
+for(let i=0;i<80;i++){
+
+let e=document.createElement("div");
+
+e.className="emoji";
+
+e.innerHTML=Math.random()>0.5?"😂":"❤️";
+
+e.style.left=Math.random()*100+"vw";
+
+e.style.animationDuration=(3+Math.random()*4)+"s";
+
+e.style.fontSize=(20+Math.random()*30)+"px";
+
+document.body.appendChild(e);
+
+}
+
+confetti();
+
+}
+
+function confetti(){
+
+const canvas=document.getElementById("canvas");
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+
+for(let i=0;i<250;i++){
+
+pieces.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height-canvas.height,
+
+r:Math.random()*6+4,
+
+d:Math.random()*250,
+
+color:`hsl(${Math.random()*360},100%,50%)`
+
+});
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.fillStyle=p.color;
+
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fill();
+
+});
+
+update();
+
+requestAnimationFrame(draw);
+
+}
+
+function update(){
+
+pieces.forEach(p=>{
+
+p.y+=4;
+
+if(p.y>canvas.height){
+
+p.y=-10;
+
+p.x=Math.random()*canvas.width;
+
+}
+
+});
+
+}
+
+draw();
+
+}
+
+</script>
+
+</body>
+</html>
